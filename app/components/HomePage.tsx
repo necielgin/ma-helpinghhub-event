@@ -1,27 +1,13 @@
-import { Box } from "@chakra-ui/react";
 import HeroSection from "./HeroSection";
+import Buttons from "./Buttons";  
+import { Box } from '@chakra-ui/react';
+
 
 const HomePage = () => {
     return (
-        <Box position="relative">
-          {/* Background Image Container */}
-          <Box
-            position="fixed"
-            top="0"
-            left="0"
-            w="100%"
-            h="100%"
-            zIndex="-1"
-            bgImage="url('/background.png')"
-            bgSize="cover"
-            bgPosition="center"
-            bgRepeat="no-repeat"
-          />
-    
-          {/* Page Content */}
-          <Box>
+        <Box>
             <HeroSection />
-          </Box>
+            <Buttons />
         </Box>
       );
     };

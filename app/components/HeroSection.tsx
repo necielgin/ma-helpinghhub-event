@@ -2,7 +2,7 @@ import { Link, Box, Flex, Image, Button, Heading } from '@chakra-ui/react';
 
 const HeroSection = () => {
   return (
-    <Box position="relative" height="100vh" overflow="hidden">
+    <Box >
       {/* Header */}
     <Flex
         as="header"
@@ -30,7 +30,8 @@ const HeroSection = () => {
             colorScheme="teal"
             size="md" mr="4" 
             rounded="2xl" 
-            padding="0.5rem 2rem">
+            padding="0.5rem 2rem"
+            >
                 Events
         </Button>
         <Button colorScheme="teal" size="xl" rounded="full" padding="0.5rem 2.5rem">
