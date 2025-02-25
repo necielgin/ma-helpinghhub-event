@@ -1,4 +1,7 @@
 import { Provider } from "@/components/ui/provider"
+import { Inter } from "next/font/google"
+
+const inter = Inter({ subsets: ['latin'] })
 
 export default function RootLayout(props: { children: React.ReactNode }) {
   const { children } = props
@@ -14,7 +17,7 @@ export default function RootLayout(props: { children: React.ReactNode }) {
           backgroundRepeat: 'no-repeat',
           backgroundAttachment: 'fixed',
           backgroundPosition: 'center',
-          fontFamily: 'Inter, sans-serif'
+          fontFamily: inter.style.fontFamily,
           }}>
           <Provider>{children}</Provider>
         </body>
