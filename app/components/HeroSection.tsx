@@ -31,24 +31,6 @@ const HeroSection = () => {
         </Button>
         </Flex>
     </Flex>
-    <Box>
-        <Flex
-        direction="column"
-        align="center"
-        justify="center"
-        height="40vh"
-        textAlign="center"
-        >
-          <Heading as="h1" size="5xl" mb="2">
-            Make a Difference
-          </Heading>
-          <Heading as="h2" size="4xl" mb="4">
-            Volunteer or Organize a Volunteering Event
-          </Heading>
-          <p>Explanation text here Explanation text here
-          Explanation text here </p>
-        </Flex>
-      </Box>
     </Box>
 );
 };
