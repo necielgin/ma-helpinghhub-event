@@ -65,34 +65,36 @@ const SearchEventsBox: React.FC<SearchEventsBoxProps> = ({setSearchBoxModalOpen,
       });
     }
     
-    // Handle enter key
     else if (e.key === 'Enter') {
       e.preventDefault();
       if (selectedIndex >= 0 && selectedIndex < suggestions.length) {
-        // Select the highlighted suggestion
+        // Select the highlighted suggestion but do not update the query state
         const selectedSuggestion = suggestions[selectedIndex];
         console.log('Selected via keyboard:', selectedSuggestion.description);
-        setQuery(selectedSuggestion.description.replace(", USA", ""));
+        setIsSubmitting(true);
+        setSuggestions([]);
+        setSelectedIndex(-1);
+        await wait(1000); // Simulate a delay
+        router.push('/events?location=' + selectedSuggestion.description.replace(", USA", ""));
       } else {
         console.log('Submitted current query:', query);
+        setIsSubmitting(true);
+        setSuggestions([]);
+        setSelectedIndex(-1);
+        await wait(1000);
+        router.push('/events?location=' + query);
       }
-      setIsSubmitting(true);
-      setSuggestions([]);
-      setSelectedIndex(-1);
-      await wait(1000); // Simulate a delay
-      router.push('/events')
     }
   };
 
   const handleSuggestionClick = async (suggestion: PlaceAutocompleteResult) => {
-    console.log('Selected via click:', suggestion.description);
-    setQuery(suggestion.description.replace(", USA", ""));
+    setQuery(suggestion.description);
     setSuggestions([]);
     setSelectedIndex(-1);
     setIsSubmitting(true);
     if (inputRef.current) inputRef.current.blur();
     await wait(1000); // Simulate a delay
-    router.push('/events')
+    router.push('/events?location=' + suggestion.description.replace(", USA", ""))
   }
 
   return (
