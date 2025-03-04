@@ -1,5 +1,6 @@
 'use client';
 import React, { useState, useEffect, useRef } from 'react';
+import { useRouter } from 'next/navigation'
 import { autoComplete } from "@/app/lib/google"
 import { Box, Flex, CloseButton, Input, Text, Spinner, VStack } from '@chakra-ui/react';
 import { InputGroup } from "@/components/ui/input-group"
@@ -16,8 +17,9 @@ const SearchEventsBox: React.FC<SearchEventsBoxProps> = ({setSearchBoxModalOpen,
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [suggestions, setSuggestions] = useState<PlaceAutocompleteResult[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
-  const [selectedIndex, setSelectedIndex] = useState(-1);
+  const [selectedIndex, setSelectedIndex] = useState(0);
   const suggestionsRef = useRef<(HTMLDivElement | null)[]>([]);
+  const router = useRouter()
 
 
   useEffect(() => {
@@ -34,7 +36,7 @@ const SearchEventsBox: React.FC<SearchEventsBoxProps> = ({setSearchBoxModalOpen,
   }, [suggestions]);
 
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  const handleKeyDown = async (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (!suggestions.length) return;
 
     // Handle arrow down
@@ -77,16 +79,20 @@ const SearchEventsBox: React.FC<SearchEventsBoxProps> = ({setSearchBoxModalOpen,
       setIsSubmitting(true);
       setSuggestions([]);
       setSelectedIndex(-1);
+      await wait(1000); // Simulate a delay
+      router.push('/events')
     }
   };
 
-  const handleSuggestionClick = (suggestion: PlaceAutocompleteResult) => {
+  const handleSuggestionClick = async (suggestion: PlaceAutocompleteResult) => {
     console.log('Selected via click:', suggestion.description);
     setQuery(suggestion.description.replace(", USA", ""));
     setSuggestions([]);
     setSelectedIndex(-1);
     setIsSubmitting(true);
     if (inputRef.current) inputRef.current.blur();
+    await wait(1000); // Simulate a delay
+    router.push('/events')
   }
 
   return (
@@ -170,7 +176,8 @@ const SearchEventsBox: React.FC<SearchEventsBoxProps> = ({setSearchBoxModalOpen,
                 key={index}
                 padding="10px 15px"
                 onMouseEnter={() => setSelectedIndex(index)}
-                onMouseLeave={() => setSelectedIndex(-1)}                bg={selectedIndex === index ? "gray.200" : "white"}
+                onMouseLeave={() => setSelectedIndex(-1)}                
+                bg={selectedIndex === index ? "gray.200" : "white"}
                 cursor="pointer"
                 onClick={() => handleSuggestionClick(suggestion)}
               >
@@ -191,3 +198,7 @@ const SearchEventsBox: React.FC<SearchEventsBoxProps> = ({setSearchBoxModalOpen,
 };
 
 export default SearchEventsBox;
+
+function wait(ms: number) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
