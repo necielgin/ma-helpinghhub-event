@@ -74,14 +74,12 @@ const SearchEventsBox: React.FC<SearchEventsBoxProps> = ({setSearchBoxModalOpen,
         setIsSubmitting(true);
         setSuggestions([]);
         setSelectedIndex(-1);
-        await wait(1000); // Simulate a delay
         router.push('/events?location=' + selectedSuggestion.description.replace(", USA", ""));
       } else {
         console.log('Submitted current query:', query);
         setIsSubmitting(true);
         setSuggestions([]);
         setSelectedIndex(-1);
-        await wait(1000);
         router.push('/events?location=' + query);
       }
     }
@@ -93,21 +91,15 @@ const SearchEventsBox: React.FC<SearchEventsBoxProps> = ({setSearchBoxModalOpen,
     setSelectedIndex(-1);
     setIsSubmitting(true);
     if (inputRef.current) inputRef.current.blur();
-    await wait(1000); // Simulate a delay
     router.push('/events?location=' + suggestion.description.replace(", USA", ""))
   }
 
   return (
     <Box 
-      background={"rgba(121,135,84, 0.55)"} 
       margin="auto" 
-      width="35%" 
-      height="400px" 
-      borderRadius="10px"
-      overflow="hidden" 
+      width="50%" 
     >
       <Flex 
-        background={"rgba(77, 115, 104, 0.79)"} 
         align="center" 
         justify="flex-start" 
         borderTopRadius="10px" 
@@ -127,7 +119,7 @@ const SearchEventsBox: React.FC<SearchEventsBoxProps> = ({setSearchBoxModalOpen,
         />
       </Flex> 
       <Flex justify="center" mt={2} mb={4}>
-        <Text textStyle="xl" fontWeight="semibold">Find Volunteering Events Near You</Text>
+        <Text textStyle="3xl" fontWeight="bold" color="black">Find Volunteering Events Near You</Text>
       </Flex> 
       
       {/* Search bar section */}
@@ -200,7 +192,3 @@ const SearchEventsBox: React.FC<SearchEventsBoxProps> = ({setSearchBoxModalOpen,
 };
 
 export default SearchEventsBox;
-
-function wait(ms: number) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}

@@ -1,14 +1,37 @@
-export default async function EventsPage({
-  searchParams,
-}: {
-  searchParams: { location?: string };
-}) {
-  const {location} = await searchParams;
+"use client"
+import "../style/index.css";
+import { useEffect } from "react"
+import { useEventsStore } from "@/app/store/eventsStore";
+import { useSearchParams } from "next/navigation";
 
+
+export default function EventsPage() {
+  const searchParams = useSearchParams();
+  const location = searchParams.get("location") || ""; // Default to empty string
+  const { data, fetchEvents, loading, error } = useEventsStore(); // Destructure the store
+  
+  useEffect(() => {
+    if (location) {
+      fetchEvents(location);
+    }
+  }, [location, fetchEvents]);
+  
   return (
-    <div className="p-6">
-      <h1 className="text-2xl font-bold">Events in {location || "ALL EVENT"}</h1>
-      {/* Fetch events based on the location query */}
+    <div className="background-style" style={{backgroundColor: "white", color: "black"}}>
+      <h1>Events</h1>
+      
+      {loading && <p>Loading events...</p>}
+      {error && <p>Error: {error}</p>}
+      
+      <ul>
+        {data && data.count > 0 ? (
+          data.events.map((event, index) => (
+            <li key={index}>{event.event_title}</li>
+          ))
+        ) : (
+          <p>No events found</p>
+        )}
+      </ul>
     </div>
   );
 }
