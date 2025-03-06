@@ -14,4 +14,6 @@ export default interface Event {
     current_volunteers: number | null;
     registration_deadline: string;
     distance: number;
+    organizer_id: string | null;
+    organizer_name: string;
   }
