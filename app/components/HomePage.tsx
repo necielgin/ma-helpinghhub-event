@@ -25,7 +25,7 @@ const HomePage = () => {
     return (
         <Box>
             <HeroSection setIsSignUpModalOpen={setIsSignUpModalOpen} setIsModalOpen={setIsModalOpen}/>
-        {isSignUpIndividualOpen === false || isSignUpOrganizationOpen === false && (
+        {isSignUpIndividualOpen === false && isSignUpOrganizationOpen === false && (
         <Flex direction="column" align="center"
                 justify="center" height="40vh" textAlign="center" color="black">
             <Heading as="h1" size="5xl" mb="2">
