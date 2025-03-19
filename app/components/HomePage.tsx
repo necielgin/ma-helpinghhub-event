@@ -1,16 +1,31 @@
 'use client'
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import HeroSection from "./HeroSection";
 import SearchEventsBox from "./SearchEventsBox";
+import IndividualSignUp from './IndividualSignUp';
+import OrganizationSignUp from './OrganizationSignUp';
 import { Box, Flex, Button, Heading } from '@chakra-ui/react';
 
 const HomePage = () => {
     const [searchBoxModalOpen, setSearchBoxModalOpen] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(true);
+    const [isSignUpModalOpen, setIsSignUpModalOpen] = useState(false);
+    const [isSignUpIndividualOpen, setIsSignUpIndividualOpen] = useState(false);
+    const [isSignUpOrganizationOpen, setIsSignUpOrganizationOpen] = useState(false);
+
+    useEffect(() => {
+        if (isSignUpModalOpen) {
+            setIsModalOpen(false);
+            setIsSignUpIndividualOpen(false);
+            setIsSignUpOrganizationOpen(false);
+        }
+    }, [isSignUpModalOpen]);
+
     return (
         <Box>
-            <HeroSection />
+            <HeroSection setIsSignUpModalOpen={setIsSignUpModalOpen} setIsModalOpen={setIsModalOpen}/>
+        {isSignUpIndividualOpen === false || isSignUpOrganizationOpen === false && (
         <Flex direction="column" align="center"
                 justify="center" height="40vh" textAlign="center" color="black">
             <Heading as="h1" size="5xl" mb="2">
@@ -20,7 +35,7 @@ const HomePage = () => {
                 Volunteer or Organize a Volunteering Event
             </Heading>
                 <p>Explanation text here Explanation text here Explanation text here </p>
-        </Flex>
+        </Flex>)}
         {isModalOpen && (
         <Flex height="20vh" align="center" justify="center" gap="8" direction="column" transform="translateX(10px)">
             <Button w="275px" h="60px" colorScheme="teal" size="xl" rounded="full" colorPalette="green" 
@@ -47,6 +62,34 @@ const HomePage = () => {
             </Flex>
         )
         }
+        {isSignUpModalOpen && (
+            <Flex direction="column" align="center" gap={5}>
+                <Button colorScheme="teal" size="2xl" w="300px" rounded="full" padding="0.5rem 2.5rem" bg="rgb(238, 230, 213)" _hover={{bg:"rgb(221, 193, 143)"}}
+                    onClick={() => {
+                        setIsSignUpModalOpen(false)
+                        setIsSignUpIndividualOpen(true);
+                    }}>
+                    Sign Up As Individual
+                </Button>
+                <Button colorScheme="teal" size="2xl" w="300px" rounded="full" padding="0.5rem 2.5rem" bg="rgb(238, 230, 213)" _hover={{bg:"rgb(221, 193, 143)"}}
+                    onClick={() => {
+                        setIsSignUpModalOpen(false)
+                        setIsSignUpOrganizationOpen(true);
+                    }}>
+                    Sign Up As Organization
+                </Button>
+            </Flex>
+        )}
+        {isSignUpIndividualOpen &&(
+            <Flex direction="column" align="center">
+                <IndividualSignUp />
+            </Flex>
+        )}
+        {isSignUpOrganizationOpen && (
+            <Flex direction="column" align="center">
+                <OrganizationSignUp/>
+            </Flex>
+        )}
     </Box>
     );
     };

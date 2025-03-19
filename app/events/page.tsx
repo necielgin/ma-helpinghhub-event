@@ -61,7 +61,10 @@ const EventsPage: React.FC = () => {
             <EventCard key={index} event={event}/>)}
           </Stack>
           </>
-        ) :null}
+        ) :
+        <>
+        </>
+        }
     
     </Box>
   );
